@@ -42,8 +42,8 @@
 " Load statuslines {{{
 	let s:superstatus = {}
 	function! b:SuperstatusRegister(plugin, bufname, statusline) " {{{
-		let s:superstatus[a:plugin] = {
-		\   'bufname': a:bufname
+		let s:superstatus[a:bufname] = {
+		\   'plugin'    : a:plugin
 		\ , 'statusline': a:statusline
 		\ }
 	endfunction " }}}
@@ -84,55 +84,44 @@
 	call s:SourceColors()
 " }}}
 " Core functions {{{
-	function! s:DetectStatusline() "{{{
-		" TODO Detect existing statusline, use buffer-specific statusline
-	endfunction " }}}
 	function! s:Superstatus(mode, current) " {{{
 		let current = (a:current ? '' : 'NC')
-		let mode = a:mode
-		let new_stl = s:superstatus.DEFAULT.statusline
 
-		" Prepare current buffer specific text
-		" Syntax: <CUR> ... </CUR>
-		let new_stl = substitute(new_stl, '<CUR>\(.\{-,}\)</CUR>', (a:current ? '\1' : ''), 'g')
-
-		" Prepare statusline colors
-		" Syntax: #[ ... ]
-		let new_stl = substitute(new_stl, '#\[\(\w\+\)\]', '%#StatusLine'.mode.'\1'.current.'#', 'g')
-
-		" Prepare statusline arrows
-		" Syntax: [>] [>>] [<] [<<]
-		let new_stl = substitute(new_stl, '\[>\]',  s:arrows[g:superstatus_arrows][3], 'g')
-		let new_stl = substitute(new_stl, '\[>>\]', s:arrows[g:superstatus_arrows][5], 'g')
-		let new_stl = substitute(new_stl, '\[<\]',  s:arrows[g:superstatus_arrows][2], 'g')
-		let new_stl = substitute(new_stl, '\[<<\]', s:arrows[g:superstatus_arrows][4], 'g')
-
-		if &l:statusline ==# new_stl
-			" Statusline already set, nothing to do
-			return
-		endif
-
-		if empty(&l:statusline)
-			" No statusline is set, use my_stl
-			let &l:statusline = new_stl
+		let bufname = bufname('%')
+		if exists("s:superstatus['" . bufname . "']")
+			let stl_plugin = bufname
 		else
-			" Check if a custom statusline is set
-			let plain_stl = substitute(&l:statusline, '%#StatusLine\w\+#', '', 'g')
-
-			if &l:statusline ==# plain_stl
-				" A custom statusline is set, don't modify
-				return
-			endif
-
-			" No custom statusline is set, use my_stl
-			let &l:statusline = new_stl
+			let stl_plugin = 'DEFAULT'
 		endif
+
+		" Fetch statusline
+		let stl = s:superstatus[stl_plugin].statusline
+
+		" Substitute current buffer specific text
+		" Syntax: [CUR] [/CUR]
+		let stl = substitute(stl, '\[CUR\]\(.\{-,}\)\[/CUR\]', (a:current ? '\1' : ''), 'g')
+
+		" Substitute statusline colors
+		" Syntax: [# ... ]
+		let stl = substitute(stl, '\[#\(\w\+\)\]', '%#StatusLine'.a:mode.'\1'.current.'#', 'g')
+
+		" Substitute statusline arrows
+		" Syntax: [<] [>] [<<] [>>]
+		let stl = substitute(stl, '\[<\]',  s:arrows[g:superstatus_arrows][2], 'g')
+		let stl = substitute(stl, '\[>\]',  s:arrows[g:superstatus_arrows][3], 'g')
+		let stl = substitute(stl, '\[<<\]', s:arrows[g:superstatus_arrows][4], 'g')
+		let stl = substitute(stl, '\[>>\]', s:arrows[g:superstatus_arrows][5], 'g')
+
+		" Set statusline
+		let &l:statusline = stl
 	endfunction " }}}
 " }}}
 " Autocommands {{{
 	augroup Superstatus
 		autocmd!
 
+		" Reload statusline colors when changing color scheme
+		" Statusline colors are overridden
 		au ColorScheme *
 			\ call s:SourceColors()
 
