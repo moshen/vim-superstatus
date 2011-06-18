@@ -49,25 +49,4 @@ call b:SuperstatusColors({
 		\ , 'LineNumber'     : [[   23, 117, 'bold'], [                  ]]
 		\ , 'LineColumn'     : [[   31, 117, 'NONE'], [                  ]]
 	\ }
-	\ , 'Visual': {
-		\   'Mode'           : [[   23, 153, 'bold'], [                  ]]
-		\ , 'ModeS'          : [[   31, 153, 'bold'], [                  ]]
-		\ , 'Branch'         : [[  117,  31, 'NONE'], [                  ]]
-		\ , 'BranchS'        : [[  117,  31, 'NONE'], [                  ]]
-		\ , 'FileName'       : [[  231,  31, 'bold'], [                  ]]
-		\ , 'FileNameS'      : [[   24,  31, 'bold'], [                  ]]
-		\ , 'Error'          : [[  202,  31, 'bold'], [                  ]]
-		\ , 'ModFlag'        : [[  196,  31, 'bold'], [                  ]]
-		\ , 'BufFlag'        : [[   75,  31, 'NONE'], [                  ]]
-		\ , 'FunctionName'   : [[  117,  24, 'NONE'], [                  ]]
-		\ , 'FileFormat'     : [[   75,  24, 'NONE'], [                  ]]
-		\ , 'FileEncoding'   : [[   75,  24, 'NONE'], [                  ]]
-		\ , 'Separator'      : [[   37,  24, 'NONE'], [                  ]]
-		\ , 'FileType'       : [[   81,  24, 'NONE'], [                  ]]
-		\ , 'LinePercentS'   : [[   24,  31, 'NONE'], [                  ]]
-		\ , 'LinePercent'    : [[  117,  31, 'NONE'], [                  ]]
-		\ , 'LineNumberS'    : [[   31, 117, 'bold'], [                  ]]
-		\ , 'LineNumber'     : [[   23, 117, 'bold'], [                  ]]
-		\ , 'LineColumn'     : [[   31, 117, 'NONE'], [                  ]]
-	\ }
 \ })
