@@ -3,7 +3,7 @@ let s:stl  = ""
 " Show mode
 let s:stl .= "[CUR][#Mode] %{&paste ? 'PASTE [>] ' : ''}%{substitute(mode(), '', '^V', 'g')} [#ModeS][>>][/CUR]"
 
-if g:loaded_fugitive == 1
+if exists('g:loaded_fugitive') && g:loaded_fugitive == 1
 	" Show git branch
 	" Requires: Fugitive
 	let s:stl .= "[#Branch] %(%{substitute(fugitive#statusline(), 'GIT(\\([a-z0-9\\-_\\./:]\\+\\))', 'Đ \\1', 'gi')}[#BranchS] [>] %)"
