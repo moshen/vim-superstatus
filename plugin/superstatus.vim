@@ -28,6 +28,7 @@
 	call s:InitOptions({
 	\   'arrows': 'sharp'
 	\ , 'colors': 'lokaltog'
+	\ , 'statusline': 'DEFAULT'
 	\ })
 
 	let s:arrows = {
@@ -91,7 +92,7 @@
 		if exists("s:superstatus['" . bufname . "']")
 			let stl_plugin = bufname
 		else
-			let stl_plugin = 'DEFAULT'
+			let stl_plugin = g:superstatus_statusline
 		endif
 
 		" Fetch statusline
