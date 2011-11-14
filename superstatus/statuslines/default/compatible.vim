@@ -15,7 +15,7 @@ let s:stl .= "[#ModFlag]%{&readonly ? 'Ĥ ' : ''}"
 " File name
 let s:stl .= "[#FileName]%t "
 
-if g:loaded_syntastic_plugin == 1
+if exists('g:loaded_syntastic_plugin') && g:loaded_syntastic_plugin == 1
 	" Syntax error flag
 	" Requires: Syntastic
 	let s:stl .= "[CUR][#Error]%(%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', '[>][>][>] SYNTAX \\1 \\2 [>][>][>]', 'i')} %)[/CUR]"
